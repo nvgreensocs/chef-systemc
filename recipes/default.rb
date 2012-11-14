@@ -14,6 +14,7 @@ echo "HERE"
 pwd
 
      tar -zxf systemc-2.3.0.tgz
+exit -2
     
   EOH
   creates "/vagrant/ModelLibrary/amba_socket"
