@@ -15,6 +15,6 @@ bash "Extract systemc" do
    make install
 
   EOH
-  creates "/usr/local/systemc-2.3.0/lib/systemc.so"
+  creates "/usr/local/systemc-2.3.0"
 end
 
