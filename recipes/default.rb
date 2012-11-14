@@ -7,7 +7,8 @@ bash "Extract systemc" do
   
 echo "HERE"
 pwd
-    
+    file chef-solo-1/cookbooks/chef-systemc/files/default/systemc-2.3.0.tgz
+
      tar -zxf chef-solo-1/cookbooks/chef-systemc/files/default/systemc-2.3.0.tgz
 exit -2
     
