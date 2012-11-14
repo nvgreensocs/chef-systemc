@@ -17,6 +17,6 @@ pwd
 exit -2
     
   EOH
-  creates "/vagrant/ModelLibrary/amba_socket"
+  creates "/usr/lib/systemc.so"
 end
 
