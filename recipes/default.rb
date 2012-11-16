@@ -1,13 +1,16 @@
-Chef::Log.warn("Assuming you have downloaded the systemc kit")
 
-#the plan is to have the recipy simply stall and wait for the file to 'arrive' in the right place 
-#constantly pining the user and saying " please put systemc in this location ....
+
+cookbook_file Chef::Config[:file_cache_path]+"/systemc-2.3.0.tgz" do
+  source "http://www.greensocs.com/files/systemc-2.3.0.tgz"
+  mode "0644"
+end
+
 
 bash "Extract systemc" do
   cwd Chef::Config[:file_cache_path]
   code <<-EOH
  
-  tar -xf chef-solo-1/cookbooks/chef-systemc/files/default/systemc-2.3.0.tgz
+  tar -xf systemc-2.3.0.tgz
   cd systemc-2.3.0
   mkdir objdir
   cd objdir
