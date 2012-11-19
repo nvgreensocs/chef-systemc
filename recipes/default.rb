@@ -20,6 +20,6 @@ bash "Extract systemc" do
    make install
 
   EOH
-  creates "/usr/local/systemc-2.3.0"
+  creates "/usr/local/systemc-2.3.0/README"
 end
 
