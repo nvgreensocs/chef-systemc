@@ -1,4 +1,4 @@
-
+package "build-essential"
 
 remote_file Chef::Config[:file_cache_path]+"/systemc-2.3.0.tgz" do
   source "http://www.greensocs.com/files/systemc-2.3.0.tgz"
