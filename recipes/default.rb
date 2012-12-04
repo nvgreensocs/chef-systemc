@@ -34,7 +34,7 @@ bash "Extract systemc" do
    ../configure --prefix=/usr/local/systemc-2.3.0
    make
    make install
-   sudo ldconfig /usr/local/systemc-2.3.0/lib-linux64/
+   echo /usr/local/systemc-2.3.0/lib-linux64 > /etc/ld.so.conf.d/systemc.conf
 
   EOH
   creates "/usr/local/systemc-2.3.0/README"
