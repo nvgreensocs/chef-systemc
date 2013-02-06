@@ -12,8 +12,6 @@
 # 
 # ENDLICENSETEXT
 
-package "build-essential"
-
 remote_file Chef::Config[:file_cache_path]+"/systemc-2.3.0.tgz" do
   not_if {File.exists?('/usr/local/systemc-2.3.0/README')}
   source "http://www.greensocs.com/files/systemc-2.3.0.tgz"
@@ -30,13 +28,31 @@ bash "Extract systemc" do
   cd systemc-2.3.0
   mkdir objdir
   cd objdir
-  mkdir -p /usr/local/systemc-2.3.0
-   ../configure --prefix=/usr/local/systemc-2.3.0
-   make
-   make install
-   echo /usr/local/systemc-2.3.0/lib-linux64 > /etc/ld.so.conf.d/systemc.conf
+
+  if [ -w /usr/local/ ]
+  then
+    prefix=/usr/local/systemc-2.3.0
+  else
+    prefix="#{node[:prefix]}/systemc-2.3.0"
+  fi
+
+  mkdir -p $prefix
+  ../configure --prefix=$prefix
+
+  make
+  make install
+
+   if [ -w /etc/ld.so.cong.d ]
+   then
+    echo $prefix/lib-linux64 > /etc/ld.so.conf.d/systemc.conf
+    echo $prefix/lib-linux >> /etc/ld.so.conf.d/systemc.conf
+   fi
+   mkdir -p "#{node[:prefix]}/bash.profile.d"
+   echo 'export LD_LIBRARY_PATH=$prefix/lib-linux64:$LD_LIBRARY_PATH' > "#{node[:prefix]}/bash.profile.d/systemc.profile"
+   echo 'export LD_LIBRARY_PATH=$prefix/lib-linux:$LD_LIBRARY_PATH' >> "#{node[:prefix]}/bash.profile.d/systemc.profile"
 
   EOH
   creates "/usr/local/systemc-2.3.0/README"
 end
+
 
