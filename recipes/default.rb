@@ -48,7 +48,7 @@ bash "Extract systemc" do
     echo $prefix/lib-linux >> /etc/ld.so.conf.d/systemc.conf
    fi
    mkdir -p "#{node[:prefix]}/bash.profile.d"
-   echo "export LD_LIBRARY_PATH=$prefix/lib-linux64:\$LD_LIBRARY_PATH" > "#{node[:prefix]}/bash.profile.d/systemc.profile"
+   echo "export LD_LIBRARY_PATH=$prefix/lib-linux64:\\\$LD_LIBRARY_PATH" > "#{node[:prefix]}/bash.profile.d/systemc.profile"
    echo "export LD_LIBRARY_PATH=$prefix/lib-linux:\$LD_LIBRARY_PATH" >> "#{node[:prefix]}/bash.profile.d/systemc.profile"
    echo "export SYSTEMC_HOME=$prefix" >> "#{node[:prefix]}/bash.profile.d/systemc.profile"
    echo "export CFLAGS=\"-I$prefix/include \$CFLAGS\"" >> "#{node[:prefix]}/bash.profile.d/systemc.profile"
