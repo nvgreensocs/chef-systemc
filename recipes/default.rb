@@ -13,7 +13,7 @@
 # ENDLICENSETEXT
 
 remote_file Chef::Config[:file_cache_path]+"/systemc-2.3.0.tgz" do
-#  not_if {File.exists?('/usr/local/systemc-2.3.0/README')}
+  not_if {File.exists?('/usr/local/systemc-2.3.0/README')}
   source "http://www.greensocs.com/files/systemc-2.3.0.tgz"
   mode "0644"
   action :create_if_missing
