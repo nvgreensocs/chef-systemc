@@ -29,7 +29,7 @@ bash "Extract systemc" do
   mkdir objdir
   cd objdir
 
-  if [ -w /usr/local/ ]
+  if [ -w /usr/local ]
   then
     prefix=/usr/local/systemc-2.3.0
   else
