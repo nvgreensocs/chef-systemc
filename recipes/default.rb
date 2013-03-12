@@ -61,4 +61,3 @@ bash "Extract systemc" do
   creates "#{node[:prefix]}/bash.profile.d/systemc.profile"
 end
 
-
