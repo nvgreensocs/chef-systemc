@@ -12,18 +12,22 @@
 # 
 # ENDLICENSETEXT
 
-remote_file Chef::Config[:file_cache_path]+"/systemc-2.3.0.tgz" do
-  not_if {File.exists?('/usr/local/systemc-2.3.0/README')}
-  source "http://www.greensocs.com/files/systemc-2.3.0.tgz"
-  mode "0644"
-  action :create_if_missing
-end
+#remote_file Chef::Config[:file_cache_path]+"/systemc-2.3.0.tgz" do
+#  not_if {File.exists?('/usr/local/systemc-2.3.0/README')}
+#  source "http://www.greensocs.com/files/systemc-2.3.0.tgz"
+#  mode "0644"
+#  action :create_if_missing
+#end
 
+#do this as a wget, so we inherit the http proxy correctly
 
 bash "Extract systemc" do
   cwd Chef::Config[:file_cache_path]
   code <<-EOH
+  for i in #{node[:prefix]}/bash.profile.d/*; do . $i; done
  
+  wget http://www.greensocs.com/files/systemc-2.3.0.tgz
+
   tar -zxf systemc-2.3.0.tgz
   cd systemc-2.3.0
   mkdir objdir
@@ -52,7 +56,7 @@ bash "Extract systemc" do
    echo "export LD_LIBRARY_PATH=$prefix/lib-linux:\\\$LD_LIBRARY_PATH" >> "#{node[:prefix]}/bash.profile.d/systemc.profile"
    echo "export SYSTEMC_HOME=$prefix" >> "#{node[:prefix]}/bash.profile.d/systemc.profile"
    echo "export SYSTEMC_PREFIX=$prefix" >> "#{node[:prefix]}/bash.profile.d/systemc.profile"
-   echo "export CFLAGS=\"-I$prefix/include \\\$CFLAGS\"" >> "#{node[:prefix]}/bash.profile.d/systemc.profile"
+   echo 'export CFLAGS=\"-I$prefix/include \\\$CFLAGS\"' >> "#{node[:prefix]}/bash.profile.d/systemc.profile"
   EOH
   creates "#{node[:prefix]}/bash.profile.d/systemc.profile"
 end
