@@ -56,7 +56,7 @@ bash "Extract systemc" do
    echo "export LD_LIBRARY_PATH=$prefix/lib-linux:\\\$LD_LIBRARY_PATH" >> "#{node[:prefix]}/bash.profile.d/systemc.profile"
    echo "export SYSTEMC_HOME=$prefix" >> "#{node[:prefix]}/bash.profile.d/systemc.profile"
    echo "export SYSTEMC_PREFIX=$prefix" >> "#{node[:prefix]}/bash.profile.d/systemc.profile"
-   echo 'export CFLAGS=\"-I$prefix/include \\\$CFLAGS\"' >> "#{node[:prefix]}/bash.profile.d/systemc.profile"
+   echo "export CFLAGS=\\\"-I$prefix/include \\\$CFLAGS\\\"" >> "#{node[:prefix]}/bash.profile.d/systemc.profile"
   EOH
   creates "#{node[:prefix]}/bash.profile.d/systemc.profile"
 end
