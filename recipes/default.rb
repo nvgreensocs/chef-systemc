@@ -49,11 +49,14 @@ ruby_block "install SystemC" do
     prefix="#{node[:prefix]}/systemc-2.3.0"
   fi
 
-  mkdir -p $prefix
-  ../configure --prefix=$prefix
+  if [ ! -f $prefix/include/sysc/kernel/sc_ver.h ]
+  then
+    mkdir -p $prefix
+    ../configure --prefix=$prefix
 
-  make
-  make install
+    make
+    make install
+  fi
 
    if [ -w /etc/ld.so.cong.d ]
    then
