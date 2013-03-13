@@ -21,16 +21,25 @@
 
 #do this as a wget, so we inherit the http proxy correctly
 
-bash "Extract systemc" do
-  cwd Chef::Config[:file_cache_path]
-  code <<-EOH
-  for i in #{node[:prefix]}/bash.profile.d/*; do . $i; done
+ruby_block "install SystemC" do
+  block do
+    IO.popen(<<-EOH
+   for i in #{node[:prefix]}/bash.profile.d/*; do . $i; done
  
-  wget http://www.greensocs.com/files/systemc-2.3.0.tgz
+    cd #{Chef::Config[:file_cache_path]}
 
-  tar -zxf systemc-2.3.0.tgz
+  if [ ! -f systemc-2.3.0.tgz ]
+  then 
+     wget -q http://www.greensocs.com/files/systemc-2.3.0.tgz
+  fi
+
+  if [ ! -d systemc-2.3.0 ]
+  then
+     tar -zxf systemc-2.3.0.tgz
+  fi
+
   cd systemc-2.3.0
-  mkdir objdir
+  mkdir -p objdir
   cd objdir
 
   if [ -w /usr/local ]
@@ -57,7 +66,7 @@ bash "Extract systemc" do
    echo "export SYSTEMC_HOME=$prefix" >> "#{node[:prefix]}/bash.profile.d/systemc.profile"
    echo "export SYSTEMC_PREFIX=$prefix" >> "#{node[:prefix]}/bash.profile.d/systemc.profile"
    echo "export CFLAGS=\\\"-I$prefix/include \\\$CFLAGS\\\"" >> "#{node[:prefix]}/bash.profile.d/systemc.profile"
-  EOH
-  creates "#{node[:prefix]}/bash.profile.d/systemc.profile"
+     EOH
+   ) { |f|  f.each_line { |line| puts line } }
 end
-
+end
